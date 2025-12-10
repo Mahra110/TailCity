@@ -1,23 +1,8 @@
 "use client"
 
-import { LoginPage } from "@/components/login-page"
-import { useRouter } from "next/navigation"
-import { useApp } from "@/contexts/AppContext"
+import { VetsPage } from "@/components/vets-page"
 
-export default function Login() {
-  const router = useRouter()
-  const { setIsLoggedIn, setIsGuest, setUser } = useApp()
-
-  const setCurrentPage = (page: string) => {
-    router.push(`/${page === "home" ? "" : page}`)
-  }
-
-  return (
-    <LoginPage
-      setCurrentPage={setCurrentPage}
-      setIsLoggedIn={setIsLoggedIn}
-      setIsGuest={setIsGuest}
-      setUser={setUser}
-    />
-  )
+export default function Vets() {
+  const isLoggedIn = typeof window !== "undefined" && localStorage.getItem("isLoggedIn") === "true"
+  return <VetsPage isLoggedIn={isLoggedIn} />
 }
