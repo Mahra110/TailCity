@@ -1,35 +1,23 @@
 "use client"
 
-import { CheckoutPage } from "@/components/checkout-page"
+import { LoginPage } from "@/components/login-page"
 import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useApp } from "@/contexts/AppContext"
 
-export default function Checkout() {
+export default function Login() {
   const router = useRouter()
-  const [cartItems, setCartItems] = useState([])
-  const [user, setUser] = useState(null)
-
-  useEffect(() => {
-    const storedCart = localStorage.getItem("cartItems")
-    const storedUser = localStorage.getItem("user")
-
-    if (storedCart) {
-      setCartItems(JSON.parse(storedCart))
-    }
-
-    if (storedUser) {
-      setUser(JSON.parse(storedUser))
-    }
-  }, [])
+  const { setIsLoggedIn, setIsGuest, setUser } = useApp()
 
   const setCurrentPage = (page: string) => {
     router.push(`/${page === "home" ? "" : page}`)
   }
 
-  const clearCart = () => {
-    localStorage.removeItem("cartItems")
-    setCartItems([])
-  }
-
-  return <CheckoutPage cartItems={cartItems} setCurrentPage={setCurrentPage} clearCart={clearCart} user={user} />
+  return (
+    <LoginPage
+      setCurrentPage={setCurrentPage}
+      setIsLoggedIn={setIsLoggedIn}
+      setIsGuest={setIsGuest}
+      setUser={setUser}
+    />
+  )
 }
